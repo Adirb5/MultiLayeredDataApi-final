@@ -1,0 +1,71 @@
+[
+  {
+    "ContainingType": "MultiLayeredDataApi.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "MultiLayeredDataApi.DTOs.LoginRequestDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MultiLayeredDataApi.Controllers.DataController",
+    "Method": "Post",
+    "RelativePath": "data",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "MultiLayeredDataApi.DTOs.DataItemDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MultiLayeredDataApi.Controllers.DataController",
+    "Method": "Get",
+    "RelativePath": "data/{id}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "MultiLayeredDataApi.Controllers.DataController",
+    "Method": "Put",
+    "RelativePath": "data/{id}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "id",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "dto",
+        "Type": "MultiLayeredDataApi.DTOs.DataItemDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
