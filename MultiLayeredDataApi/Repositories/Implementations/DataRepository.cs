@@ -1,6 +1,5 @@
 ﻿using MultiLayeredDataApi.Data;
 using MultiLayeredDataApi.Models;
-using MultiLayeredDataApi.Repositories.Interfaces;
 
 namespace MultiLayeredDataApi.Repositories.Implementations
 {

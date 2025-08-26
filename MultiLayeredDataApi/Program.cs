@@ -1,43 +1,25 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MultiLayeredDataApi.Data;
+using MultiLayeredDataApi.Factories;
 using MultiLayeredDataApi.Infrastructure.Cache;
 using MultiLayeredDataApi.Infrastructure.FileStorage;
 using MultiLayeredDataApi.Infrastructure.Security;
+using MultiLayeredDataApi.Repositories;
 using MultiLayeredDataApi.Repositories.Implementations;
-using MultiLayeredDataApi.Repositories.Interfaces;
-using MultiLayeredDataApi.Services.Implementations;
-using MultiLayeredDataApi.Services.Interfaces;
+using MultiLayeredDataApi.Services;
+using MultiLayeredDataApi.Storage;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
-// ----------------------------
-// 1. Database (SQLite + EF Core)
-// ----------------------------
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// ----------------------------
-// 2. Caching (MemoryCache)
-// ----------------------------
-builder.Services.AddMemoryCache();
-builder.Services.AddSingleton<CacheService>();
-builder.Services.AddSingleton<FileStorageService>();
-
-// ----------------------------
-// 3. Repositories + Services
-// ----------------------------
-builder.Services.AddScoped<IDataRepository, DataRepository>();
-builder.Services.AddScoped<IDataService, DataService>();
 builder.Services.AddSingleton<JwtService>();
-
-// ----------------------------
-// 4. Authentication (JWT)
-// ----------------------------
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "supersecretkey12345"; // key זמני
 var key = Encoding.ASCII.GetBytes(jwtKey);
 
@@ -51,24 +33,20 @@ builder.Services.AddAuthentication("Bearer")
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"] ?? "0"))
         };
     });
 
 builder.Services.AddAuthorization();
 
-// ----------------------------
-// 5. Authorization
-// ----------------------------
+
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
     options.AddPolicy("User", policy => policy.RequireRole("User"));
 });
 
-// ----------------------------
-// 6. CORS
-// ----------------------------
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowClient", policy =>
@@ -77,9 +55,7 @@ builder.Services.AddCors(options =>
               .AllowAnyMethod());
 });
 
-// ----------------------------
-// 7. Swagger
-// ----------------------------
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -113,7 +89,13 @@ builder.Services.AddSwaggerGen(c =>
         }
     });
 });
+builder.Services.AddScoped<ICacheService, CacheService>();
+builder.Services.AddScoped<IFileStorageService, FileStorageService>();
+builder.Services.AddScoped<ICompositeStorage, CompositeStorage>();
+builder.Services.AddScoped<IStorageFactory, StorageFactory>();
+builder.Services.AddScoped<IDataRepository, DataRepository>();
 
+builder.Services.AddScoped<DataService>();
 // ----------------------------
 // Build App
 // ----------------------------

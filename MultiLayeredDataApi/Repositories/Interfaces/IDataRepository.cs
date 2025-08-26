@@ -1,6 +1,6 @@
 ﻿using MultiLayeredDataApi.Models;
 
-namespace MultiLayeredDataApi.Repositories.Interfaces
+namespace MultiLayeredDataApi.Repositories
 {
     public interface IDataRepository
     {
@@ -8,5 +8,4 @@ namespace MultiLayeredDataApi.Repositories.Interfaces
         Task AddAsync(DataItem item);
         Task UpdateAsync(DataItem item);
     }
-
 }
