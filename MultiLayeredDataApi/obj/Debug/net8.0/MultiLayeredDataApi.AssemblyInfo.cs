@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("MultiLayeredDataApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+79148d0dccc2bbf824e360812fde5b258ccc8baa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ece75420944f84f33a1000290f139241bd83b430")]
 [assembly: System.Reflection.AssemblyProductAttribute("MultiLayeredDataApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("MultiLayeredDataApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

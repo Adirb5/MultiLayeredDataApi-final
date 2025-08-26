@@ -9,6 +9,7 @@ using MultiLayeredDataApi.Infrastructure.Security;
 using MultiLayeredDataApi.Repositories;
 using MultiLayeredDataApi.Repositories.Implementations;
 using MultiLayeredDataApi.Services;
+using MultiLayeredDataApi.Services.Interfaces;
 using MultiLayeredDataApi.Storage;
 using System.Text;
 
@@ -94,6 +95,8 @@ builder.Services.AddScoped<IFileStorageService, FileStorageService>();
 builder.Services.AddScoped<ICompositeStorage, CompositeStorage>();
 builder.Services.AddScoped<IStorageFactory, StorageFactory>();
 builder.Services.AddScoped<IDataRepository, DataRepository>();
+builder.Services.AddScoped<IDataService, DataService>();
+
 
 builder.Services.AddScoped<DataService>();
 // ----------------------------

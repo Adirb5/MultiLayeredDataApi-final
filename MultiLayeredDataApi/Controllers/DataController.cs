@@ -9,15 +9,18 @@ namespace MultiLayeredDataApi.Controllers
     [Route("data")]
     public class DataController : ControllerBase
     {
-        private readonly IDataService _service;
+        private readonly IDataService _dataService;
 
-        public DataController(IDataService service) => _service = service;
+        public DataController(IDataService dataService)
+        {
+            _dataService = dataService;
+        }
 
         [HttpGet("{id}")]
         [Authorize(Roles = "User,Admin")]
         public async Task<IActionResult> Get(int id)
         {
-            var data = await _service.GetData(id);
+            var data = await _dataService.GetDataAsync(id);
             return data != null ? Ok(data) : NotFound();
         }
 
@@ -25,7 +28,7 @@ namespace MultiLayeredDataApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post([FromBody] DataItemDto dto)
         {
-            await _service.AddData(dto);
+            await _dataService.AddDataAsync(dto);
             return Ok();
         }
 
@@ -33,7 +36,7 @@ namespace MultiLayeredDataApi.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Put(int id, [FromBody] DataItemDto dto)
         {
-            await _service.UpdateData(id, dto);
+            await _dataService.UpdateDataAsync( dto);
             return Ok();
         }
     }

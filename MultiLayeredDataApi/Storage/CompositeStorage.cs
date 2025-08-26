@@ -1,4 +1,5 @@
-﻿using MultiLayeredDataApi.Infrastructure.Cache;
+﻿using MultiLayeredDataApi.DTOs;
+using MultiLayeredDataApi.Infrastructure.Cache;
 using MultiLayeredDataApi.Infrastructure.FileStorage;
 using MultiLayeredDataApi.Models;
 using MultiLayeredDataApi.Repositories;
@@ -21,7 +22,7 @@ namespace MultiLayeredDataApi.Storage
             _repo = repo;
         }
 
-        public async Task SaveAsync(DataItem item)
+        public async Task SaveAsync(DataItemDto item)
         {
             
             _cache.Save(item.Id.ToString(), item.Value);
@@ -49,7 +50,7 @@ namespace MultiLayeredDataApi.Storage
             return await _repo.GetByIdAsync(id);
         }
 
-        public async Task UpdateAsync(DataItem item)
+        public async Task UpdateAsync(DataItemDto item)
         {
             _cache.Save(item.Id.ToString(), item.Value);
 
